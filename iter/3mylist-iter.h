@@ -34,4 +34,9 @@ template<typename T>
 bool operator!=(const ListItem<T>&item,T n){
     return item.value()!=n;
 }
+
+template<class Item>
+struct Listiter2:public std::iterator_traits<std::forward_iterator_tag>{
+    
+    };
 #endif //STL_LEARNING_3MYLIST_ITER_H

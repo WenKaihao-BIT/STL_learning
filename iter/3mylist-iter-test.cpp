@@ -11,6 +11,7 @@ using namespace std;
 
 
 int main(){
-    MtIter<int>ite(new int(8));
+    int a=5;
+    cout<<"is_int : "<<is_integral<unsigned >::value<<endl;
     return 0;
 }

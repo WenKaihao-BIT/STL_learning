@@ -2,11 +2,17 @@
 ## 5种迭代器的相应型（associated types）
 ### iterator_category
     5类迭代器
+
     Input iterator
+
     Output iterator
+
     Forward iterator
+
     Bidirectional iterator
+
     Random Access iterator
+    ·原生指针是一种Random Access iterator
 ### value_type
     指的是迭代器所指对象的类型
 ### pointer
