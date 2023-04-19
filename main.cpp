@@ -3,6 +3,7 @@
 #include<string>
 #include<vector>
 #include "new.h"
+#include "containtor//myVector.h"
 using namespace std;
 class test{
 public:
@@ -12,10 +13,10 @@ private:
     string name;
     int number;
 };
-//int main() {
-//    test t("Li",123);
-//    auto p=&t;
-//    construct(p,t);
-//    destroy(p);
-//    return 0;
-//}
+int main() {
+    test t("Li",123);
+    auto p=&t;
+    construct(p,t);
+    destroy(p);
+    return 0;
+}
