@@ -3,13 +3,13 @@
 ### iterator_category
     5类迭代器
 
-    Input iterator
+    Input iterator [read only]
 
-    Output iterator
+    Output iterator  [write only]
 
-    Forward iterator
+    Forward iterator 
 
-    Bidirectional iterator
+    Bidirectional iterator  [可以双向移动]
 
     Random Access iterator
     ·原生指针是一种Random Access iterator

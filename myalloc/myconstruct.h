@@ -10,8 +10,8 @@
 #include "new.h"
 #include "iostream"
 #include "type_traits"
-#define  __true_type std::true_type
-#define  __false_type std::false_type
+struct __true_type{};
+struct __false_type{};
 namespace wen{
     template<class T1,class T2>
     inline void construct(T1*p,const T2&value){

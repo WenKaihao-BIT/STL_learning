@@ -9,7 +9,7 @@
 template<class Item>
 struct ListIter{
     Item *ptr;
-    explicit ListIter(Item *p= nullptr):ptr(p){}
+    explicit ListIter(Item *p= 0):ptr(p){}
     Item& operator*()const{return *ptr;}
     Item* operator->() const{return ptr;}
     ListIter&operator++(){

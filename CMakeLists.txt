@@ -3,4 +3,6 @@ project(STL_learning)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(STL_learning main.cpp   alloc/myalloc.h alloc/myconstruct.h alloc/__throw_bad_alloc.h)
+include_directories(Containtor/list_containtor/include)
+add_executable(STL_learning main.cpp )
+add_executable(list_containtor_test Containtor/list_containtor/test.cpp)

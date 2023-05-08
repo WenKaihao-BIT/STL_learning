@@ -7,6 +7,8 @@
 #include "iostream"
 
 template<typename T>class ListItem;
+
+/** region ## List ## */
 template<typename T>
 class List{
 
@@ -60,10 +62,11 @@ void List<T>::display(std::ostream &os) const {
 
     os<<std::endl;
 }
-
+/** endregion */
+/** region ## ListItem ## */
 template<typename T>
 class ListItem{
-        friend  class List<T>;
+    friend  class List<T>;
 public:
     explicit ListItem(const T& val):_value(val),_next(nullptr){}
     T value() const {return _value;}
@@ -72,4 +75,6 @@ private:
     T _value;
     ListItem* _next;
 };
+/** endregion */
+
 #endif //STL_LEARNING_3MYLIST_H

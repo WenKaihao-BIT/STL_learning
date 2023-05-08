@@ -657,7 +657,7 @@ public:
   }
 
 
-  // Removes all of the elements from the list __x to *this, inserting
+  // Removes all of the elements from the list_containtor __x to *this, inserting
   // them immediately after __pos.  __x must not be *this.  Complexity:
   // linear in __x.size().
   void splice_after(iterator __pos, slist& __x)

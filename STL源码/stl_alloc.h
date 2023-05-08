@@ -94,7 +94,7 @@ __STL_BEGIN_NAMESPACE
 #pragma set woff 1174
 #endif
 
-// Malloc-based allocator.  Typically slower than default alloc below.
+// Malloc-based allocator.  Typically slower than default myalloc below.
 // Typically thread-safe and more storage efficient.
 #ifdef __STL_STATIC_TEMPLATE_MEMBER_BUG
 # ifdef __DECLARE_GLOBALS_HERE
@@ -247,7 +247,7 @@ public:
 
 # ifdef __USE_MALLOC
 
-typedef malloc_alloc alloc;
+typedef malloc_alloc myalloc;
 typedef malloc_alloc single_client_alloc;
 
 # else
@@ -257,14 +257,14 @@ typedef malloc_alloc single_client_alloc;
 // With a reasonable compiler, this should be roughly as fast as the
 // original STL class-specific allocators, but with less fragmentation.
 // Default_alloc_template parameters are experimental and MAY
-// DISAPPEAR in the future.  Clients should just use alloc for now.
+// DISAPPEAR in the future.  Clients should just use myalloc for now.
 //
 // Important implementation properties:
 // 1. If the client request an object of size > _MAX_BYTES, the resulting
 //    object will be obtained directly from malloc.
 // 2. In all other cases, we allocate an object of size exactly
 //    _S_round_up(requested_size).  Thus the client has enough size
-//    information that we can return the object to the proper free list
+//    information that we can return the object to the proper free list_containtor
 //    without permanently losing part of the object.
 //
 
@@ -316,7 +316,7 @@ private:
         return (((__bytes) + (size_t)_ALIGN-1)/(size_t)_ALIGN - 1);
   }
 
-  // Returns an object of size __n, and optionally adds to size __n free list.
+  // Returns an object of size __n, and optionally adds to size __n free list_containtor.
   static void* _S_refill(size_t __n);
   // Allocates a chunk for nobjs of size size.  nobjs may be reduced
   // if it is inconvenient to allocate the requested number.
@@ -473,7 +473,7 @@ __default_alloc_template<__threads, __inst>::_S_chunk_alloc(size_t __size,
                     _S_end_free = _S_start_free + __i;
                     return(_S_chunk_alloc(__size, __nobjs));
                     // Any leftover piece will eventually make it to the
-                    // right free list.
+                    // right free list_containtor.
                 }
             }
 	    _S_end_free = 0;	// In case of exception.
@@ -489,7 +489,7 @@ __default_alloc_template<__threads, __inst>::_S_chunk_alloc(size_t __size,
 }
 
 
-/* Returns an object of size __n, and optionally adds to size __n free list.*/
+/* Returns an object of size __n, and optionally adds to size __n free list_containtor.*/
 /* We assume that __n is properly aligned.                                */
 /* We hold the allocation lock.                                         */
 template <bool __threads, int __inst>
@@ -507,7 +507,7 @@ __default_alloc_template<__threads, __inst>::_S_refill(size_t __n)
     if (1 == __nobjs) return(__chunk);
     __my_free_list = _S_free_list + _S_freelist_index(__n);
 
-    /* Build free list in chunk */
+    /* Build free list_containtor in chunk */
       __result = (_Obj*)__chunk;
       *__my_free_list = __next_obj = (_Obj*)(__chunk + __n);
       for (__i = 1; ; __i++) {
@@ -587,7 +587,7 @@ __default_alloc_template<__threads, __inst> ::_S_free_list[
 
 template <class _Tp>
 class allocator {
-  typedef alloc _Alloc;          // The underlying allocator.
+  typedef myalloc _Alloc;          // The underlying allocator.
 public:
   typedef size_t     size_type;
   typedef ptrdiff_t  difference_type;
@@ -654,12 +654,12 @@ inline bool operator!=(const allocator<_T1>&, const allocator<_T2>&)
   return false;
 }
 
-// Allocator adaptor to turn an SGI-style allocator (e.g. alloc, malloc_alloc)
+// Allocator adaptor to turn an SGI-style allocator (e.g. myalloc, malloc_alloc)
 // into a standard-conforming allocator.   Note that this adaptor does
-// *not* assume that all objects of the underlying alloc class are
-// identical, nor does it assume that all of the underlying alloc's
+// *not* assume that all objects of the underlying myalloc class are
+// identical, nor does it assume that all of the underlying myalloc's
 // member functions are static member functions.  Note, also, that 
-// __allocator<_Tp, alloc> is essentially the same thing as allocator<_Tp>.
+// __allocator<_Tp, myalloc> is essentially the same thing as allocator<_Tp>.
 
 template <class _Tp, class _Alloc>
 struct __allocator {
@@ -815,7 +815,7 @@ template <class _Tp, class _Tp1>
 struct _Alloc_traits<_Tp, allocator<_Tp1> >
 {
   static const bool _S_instanceless = true;
-  typedef simple_alloc<_Tp, alloc> _Alloc_type;
+  typedef simple_alloc<_Tp, myalloc> _Alloc_type;
   typedef allocator<_Tp> allocator_type;
 };
 

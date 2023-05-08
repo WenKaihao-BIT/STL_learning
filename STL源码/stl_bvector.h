@@ -831,7 +831,7 @@ public:
 #ifdef __SGI_STL_VECBOOL_TEMPLATE
 
 // This typedef is non-standard.  It is provided for backward compatibility.
-typedef vector<bool, alloc> bit_vector;
+typedef vector<bool, myalloc> bit_vector;
 
 #else /* __SGI_STL_VECBOOL_TEMPLATE */
 

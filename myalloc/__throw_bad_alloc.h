@@ -4,6 +4,9 @@
 
 #ifndef STL_LEARNING___THROW_BAD_ALLOC_H
 #define STL_LEARNING___THROW_BAD_ALLOC_H
+
+#include <cstddef>
+#include <cstdlib>
 #include "new"
 #define __THROW_BAD_ALLOC throw std::bad_alloc()
 
@@ -190,7 +193,7 @@ namespace wen{
             size_t bytes_to_get = 2*total_bytes+ ROUND_UP(heap_size>>4);
             if(bytes_left>0){
                 obj*volatile*my_free_list=free_list+ FREELIST_INDEX(bytes_left);
-                //调整free list ,将内存池中残余的内存编入
+                //调整free list_containtor ,将内存池中残余的内存编入
                 ((obj*)start_free)->free_list_link=*my_free_list;
                 *my_free_list=(obj*)start_free;
             }

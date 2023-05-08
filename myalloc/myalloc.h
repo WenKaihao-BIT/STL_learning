@@ -18,6 +18,7 @@ namespace wen {
 
     template<class T, class Alloc=alloc>
     class simple_alloc {
+    public:
         static T *allocate(size_t n) {
             return 0 == n ? 0 : (T *) Alloc::allocate(n * sizeof(T));
         }
