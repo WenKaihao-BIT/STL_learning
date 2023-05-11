@@ -21,5 +21,15 @@ int main(){
         ilist.insert(ite,999);
     for(ite=ilist.begin();ite!=ilist.end();++ite)
         std::cout<<*ite<<' ';
-    std::cout<<std::endl;//-1 -2 -3 -4 -5
+    std::cout<<std::endl;//-1 -2 999 -3 -4 -5
+    ite = ilist.begin();
+    ilist.erase(ite);
+    for(ite=ilist.begin();ite!=ilist.end();++ite)
+        std::cout<<*ite<<' ';
+    std::cout<<std::endl;// -2 999 -3 -4 -5
+    wen::myList<int>ilist2;
+    ilist2.push_back(-9999);
+    ilist.swap(ilist2);
+    for(ite=ilist.begin();ite!=ilist.end();++ite)
+        std::cout<<*ite<<' ';
 }

@@ -863,7 +863,7 @@ inline valarray<bool> operator||(const _Tp& __c, const valarray<_Tp>& __x)
   return __tmp;  
 }
 
-// valarray "transcendentals" (the list_containtor includes abs and sqrt, which,
+// valarray "transcendentals" (the list_container includes abs and sqrt, which,
 // of course, are not transcendental).
 
 template <class _Tp>

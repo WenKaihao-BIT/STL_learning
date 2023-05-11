@@ -41,7 +41,7 @@ namespace wen{
         typedef typename I::iterator_category iterator_category;
 
     };
-//模板特例 针对传统指针的催促包括 const T*
+//模板特例 针对传统指针的萃取包括 const T*
     template<class T>
     struct iterator_traits<T*>{
         typedef T value_type;
@@ -170,7 +170,7 @@ namespace wen{
     template<class InputIterator,class T>
     inline InputIterator
     __find(InputIterator first,InputIterator last,const T& value,input_iterator_tag){
-        InputIterator result=0;
+        InputIterator result=InputIterator();
         while (first!=last){
             if(*first==value){
                 return first;

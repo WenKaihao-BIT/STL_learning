@@ -57,6 +57,25 @@ namespace wen{
 
         pointer operator->()const{return &(operator*());}
 
+        //循环链表
+        iterator operator+(int n){
+            iterator result=*this;
+            while (n!=0){
+                ++result;
+                --n;
+            }
+            return result;
+        }
+        iterator operator-(int n){
+            iterator result=*this;
+            while (n!=0){
+                --result;
+                --n;
+            }
+            return result;
+        }
+
+
         self& operator++(){
             node=(link_type)((*node).next);
             return *this;
@@ -89,12 +108,14 @@ namespace wen{
 
     public:
         typedef list_node * link_type;
-        typedef T value_type;
+        typedef T value_type;   //1
         typedef  __list_iterator<T,T&,T*> iterator;
         typedef  const __list_iterator<T,T&,T*> const_iterator;
-        typedef value_type& reference;
-        typedef size_t size_type;
-        typedef bidirectional_iterator_tag iterator_category;//双向的
+        typedef value_type& reference;  //2
+        typedef size_t size_type;   //3
+        typedef value_type *pointer;    //4
+        typedef const value_type& const_reference;
+        typedef bidirectional_iterator_tag iterator_category;   //5双向的
         typedef ptrdiff_t difference_type;
 
     protected:
@@ -144,12 +165,57 @@ namespace wen{
             erase(--tmp);}
         void clear();
         void remove(const T& value);
+        //移除数值相同的连续元素
+        void unique();
+        //将第二个链表接到position之后
+        void splice(iterator position,myList<T>&x){
+            if(!x.empty())
+                transfer(position,x.begin(),x.end());
+        }
+        void splice(iterator position,myList<T>&,iterator i){
+            iterator j=i;
+            ++j;
+            if(position==i||position==j) return;
+            transfer(position,i,j);
+        }
+        void splice(iterator position,myList<T>&,iterator first,iterator last){
+            if(first!=last)
+                transfer(position,first,last);
+        }
+        //将两个通过递增排序的链表合并
+        void merge(myList<T>&x){
+            iterator first1=begin();
+            iterator last1=end();
+            iterator first2=x.begin();
+            iterator last2=x.end();
+
+            while (first1!=last1&&first2!=last2){
+                if(*first2<*first1){
+                    iterator next=first2;
+                    transfer(first1,first2,++next);
+                    first2=next;
+                } else
+                    ++first1;
+            }
+            if(first2!=last2)transfer(last1,first2,last2);
+        }
+        void swap(myList<T>&x){
+            myList<T>tmp=*this;
+            *this=x;
+            x=tmp;
+        }
+        //将链表倒置
+        void reverse();
+        void sort();
+
     protected:
         void empty_initialize(){
             node = get_node();
             node->next=node;
             node->prev=node;
         }
+        //将[first,last)移动到position之前
+        void transfer(iterator position,iterator first,iterator last);
     };
 
     template<class T, class Alloc>
@@ -170,6 +236,7 @@ namespace wen{
         link_type prev_node = link_type(position.node->prev);
         prev_node->next=next_node;
         next_node->prev=prev_node;
+        destroy_node(position.node);
         return iterator (next_node);
     }
 
@@ -196,6 +263,71 @@ namespace wen{
             if(*first==value)erase(first);
             first=next;
         }
+    }
+
+    template<class T, class Alloc>
+    void myList<T, Alloc>::unique() {
+        iterator first = begin();
+        iterator last = end();
+        if(first==last) return;
+        iterator next=first;
+        while (++next!=last){
+            if(*first==*next)
+                erase(next);
+            else
+                first=next;
+            next=first;
+        }
+    }
+
+    template<class T, class Alloc>
+    void myList<T, Alloc>::transfer(iterator position,iterator first,iterator last) {
+        if(position!=last){
+            (*(link_type((*last.node).prev))).next=position.node;
+            (*(link_type((*first.node).prev))).next=last.node;
+            (*(link_type ((*position.node).prev))).next=first.node;
+            link_type tmp=link_type ((*position.node).prev);
+            (*position.node).prev=(*last.node).prev;
+            (*last.node).prev=(*first.node).prev;
+            (*first.node).prev=tmp;
+
+        }
+    }
+
+    template<class T, class Alloc>
+    void myList<T, Alloc>::reverse() {
+        if(node->next==node||link_type(node->next)->next==node)
+            return;
+        iterator first = begin();
+        ++first;
+        while (first!=end()){
+            iterator old=first;
+            ++first;
+            transfer(begin(),old,first);
+        }
+    }
+
+    template<class T, class Alloc>
+    void myList<T, Alloc>::sort() {
+        if(node->next==node||link_type(node->next)->next==node)
+            return;
+        myList<T>carry;
+        myList<T>counter[64];
+        int fill = 0;
+        while (!empty()){
+            carry.splice(carry.begin(),*this,begin());
+            int i=0;
+            while (i<fill&&!counter[i].empty()){
+                counter[i].merge(carry);
+                carry.swap(counter[i++]);
+            }
+            carry.swap(counter[i]);
+            if(i==fill) ++fill;
+        }
+        for(int i=1;i<fill;++i)
+            counter[i].merge(counter[i-1]);
+        swap(counter[fill-1]);
+
     }
 
 

@@ -437,7 +437,7 @@ public:
   // We don't need any dispatching tricks here, because insert does all of
   // that anyway.  
   template <class _InputIterator>
-  list_containtor(_InputIterator __first, _InputIterator __last,
+  list_container(_InputIterator __first, _InputIterator __last,
        const allocator_type& __a = allocator_type())
     : _Base(__a)
     { insert(begin(), __first, __last); }
@@ -529,7 +529,7 @@ public:
 #ifdef __STL_MEMBER_TEMPLATES
   template <class _Predicate> void remove_if(_Predicate);
   template <class _BinaryPredicate> void unique(_BinaryPredicate);
-  template <class _StrictWeakOrdering> void merge(list_containtor&, _StrictWeakOrdering);
+  template <class _StrictWeakOrdering> void merge(list_container&, _StrictWeakOrdering);
   template <class _StrictWeakOrdering> void sort(_StrictWeakOrdering);
 #endif /* __STL_MEMBER_TEMPLATES */
 };
@@ -562,32 +562,32 @@ inline bool operator<(const list<_Tp,_Alloc>& __x,
 #ifdef __STL_FUNCTION_TMPL_PARTIAL_ORDER
 
 template <class _Tp, class _Alloc>
-inline bool operator!=(const list_containtor<_Tp,_Alloc>& __x,
-                       const list_containtor<_Tp,_Alloc>& __y) {
+inline bool operator!=(const list_container<_Tp,_Alloc>& __x,
+                       const list_container<_Tp,_Alloc>& __y) {
   return !(__x == __y);
 }
 
 template <class _Tp, class _Alloc>
-inline bool operator>(const list_containtor<_Tp,_Alloc>& __x,
-                      const list_containtor<_Tp,_Alloc>& __y) {
+inline bool operator>(const list_container<_Tp,_Alloc>& __x,
+                      const list_container<_Tp,_Alloc>& __y) {
   return __y < __x;
 }
 
 template <class _Tp, class _Alloc>
-inline bool operator<=(const list_containtor<_Tp,_Alloc>& __x,
-                       const list_containtor<_Tp,_Alloc>& __y) {
+inline bool operator<=(const list_container<_Tp,_Alloc>& __x,
+                       const list_container<_Tp,_Alloc>& __y) {
   return !(__y < __x);
 }
 
 template <class _Tp, class _Alloc>
-inline bool operator>=(const list_containtor<_Tp,_Alloc>& __x,
-                       const list_containtor<_Tp,_Alloc>& __y) {
+inline bool operator>=(const list_container<_Tp,_Alloc>& __x,
+                       const list_container<_Tp,_Alloc>& __y) {
   return !(__x < __y);
 }
 
 template <class _Tp, class _Alloc>
 inline void 
-swap(list_containtor<_Tp, _Alloc>& __x, list_containtor<_Tp, _Alloc>& __y)
+swap(list_container<_Tp, _Alloc>& __x, list_container<_Tp, _Alloc>& __y)
 {
   __x.swap(__y);
 }
@@ -598,7 +598,7 @@ swap(list_containtor<_Tp, _Alloc>& __x, list_containtor<_Tp, _Alloc>& __y)
 
 template <class _Tp, class _Alloc> template <class _InputIter>
 void 
-list_containtor<_Tp, _Alloc>::_M_insert_dispatch(iterator __position,
+list_container<_Tp, _Alloc>::_M_insert_dispatch(iterator __position,
                                       _InputIter __first, _InputIter __last,
                                       __false_type)
 {
@@ -692,7 +692,7 @@ void list<_Tp, _Alloc>::_M_fill_assign(size_type __n, const _Tp& __val) {
 
 template <class _Tp, class _Alloc> template <class _InputIter>
 void
-list_containtor<_Tp, _Alloc>::_M_assign_dispatch(_InputIter __first2, _InputIter __last2,
+list_container<_Tp, _Alloc>::_M_assign_dispatch(_InputIter __first2, _InputIter __last2,
                                       __false_type)
 {
   iterator __first1 = begin();
@@ -772,7 +772,7 @@ inline void list<_Tp, _Alloc>::reverse()
 template <class _Tp, class _Alloc>
 void list<_Tp, _Alloc>::sort()
 {
-  // Do nothing if the list_containtor has length 0 or 1.
+  // Do nothing if the list_container has length 0 or 1.
   if (_M_node->_M_next != _M_node && _M_node->_M_next->_M_next != _M_node) {
     list<_Tp, _Alloc> __carry;
     list<_Tp, _Alloc> __counter[64];
@@ -797,7 +797,7 @@ void list<_Tp, _Alloc>::sort()
 #ifdef __STL_MEMBER_TEMPLATES
 
 template <class _Tp, class _Alloc> template <class _Predicate>
-void list_containtor<_Tp, _Alloc>::remove_if(_Predicate __pred)
+void list_container<_Tp, _Alloc>::remove_if(_Predicate __pred)
 {
   iterator __first = begin();
   iterator __last = end();
@@ -810,7 +810,7 @@ void list_containtor<_Tp, _Alloc>::remove_if(_Predicate __pred)
 }
 
 template <class _Tp, class _Alloc> template <class _BinaryPredicate>
-void list_containtor<_Tp, _Alloc>::unique(_BinaryPredicate __binary_pred)
+void list_container<_Tp, _Alloc>::unique(_BinaryPredicate __binary_pred)
 {
   iterator __first = begin();
   iterator __last = end();
@@ -826,7 +826,7 @@ void list_containtor<_Tp, _Alloc>::unique(_BinaryPredicate __binary_pred)
 }
 
 template <class _Tp, class _Alloc> template <class _StrictWeakOrdering>
-void list_containtor<_Tp, _Alloc>::merge(list_containtor<_Tp, _Alloc>& __x,
+void list_container<_Tp, _Alloc>::merge(list_container<_Tp, _Alloc>& __x,
                               _StrictWeakOrdering __comp)
 {
   iterator __first1 = begin();
@@ -845,12 +845,12 @@ void list_containtor<_Tp, _Alloc>::merge(list_containtor<_Tp, _Alloc>& __x,
 }
 
 template <class _Tp, class _Alloc> template <class _StrictWeakOrdering>
-void list_containtor<_Tp, _Alloc>::sort(_StrictWeakOrdering __comp)
+void list_container<_Tp, _Alloc>::sort(_StrictWeakOrdering __comp)
 {
-  // Do nothing if the list_containtor has length 0 or 1.
+  // Do nothing if the list_container has length 0 or 1.
   if (_M_node->_M_next != _M_node && _M_node->_M_next->_M_next != _M_node) {
-    list_containtor<_Tp, _Alloc> __carry;
-    list_containtor<_Tp, _Alloc> __counter[64];
+    list_container<_Tp, _Alloc> __carry;
+    list_container<_Tp, _Alloc> __counter[64];
     int __fill = 0;
     while (!empty()) {
       __carry.splice(__carry.begin(), *this, begin());

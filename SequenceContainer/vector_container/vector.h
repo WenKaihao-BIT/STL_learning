@@ -10,7 +10,7 @@
 
 namespace wen{
     template<class T,class Alloc=alloc>
-    class myVector{
+    class vector{
     public:
         typedef T value_type;
         typedef value_type* pointer;
@@ -44,13 +44,13 @@ namespace wen{
         bool empty()const{return begin()==end();}
         reference operator[](size_type n){return *(begin()+n);}
         /** region ## 构造函数 ## */
-        myVector():start(0),finish(0),end_of_storage(0){}
-        myVector(size_type n,const_reference value){ fill_initialize(n,value);}
-        myVector(long n,const_reference value){ fill_initialize(n,value);}
-        myVector(int n,const_reference value){ fill_initialize(n,value);}
-        explicit myVector(size_type n){ fill_initialize(n,T());}
+        vector(): start(0), finish(0), end_of_storage(0){}
+        vector(size_type n, const_reference value){ fill_initialize(n, value);}
+        vector(long n, const_reference value){ fill_initialize(n, value);}
+        vector(int n, const_reference value){ fill_initialize(n, value);}
+        explicit vector(size_type n){ fill_initialize(n, T());}
         /** endregion */
-        ~myVector(){
+        ~vector(){
             destroy(start,finish);
         }
         reference front(){return *begin();}
@@ -101,7 +101,7 @@ namespace wen{
     };
 
     template<class T, class Alloc>
-    void myVector<T, Alloc>::insert_aux(myVector::iterator position, const T &x) {
+    void vector<T, Alloc>::insert_aux(vector::iterator position, const T &x) {
     if(finish!=end_of_storage){
         construct(finish,*(finish-1));
         ++finish;
@@ -134,7 +134,7 @@ namespace wen{
     }
 
     template<class T, class Alloc>
-    void myVector<T, Alloc>::insert(myVector::iterator position, myVector::size_type n, const T &x) {
+    void vector<T, Alloc>::insert(vector::iterator position, vector::size_type n, const T &x) {
     if(n!=0){
         if(size_type(end_of_storage-finish)>=n){
             //剩余空间大于新增元素的个数

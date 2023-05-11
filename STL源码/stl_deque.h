@@ -316,7 +316,7 @@ protected:
   void _M_initialize_map(size_t);
   void _M_create_nodes(_Tp** __nstart, _Tp** __nfinish);
   void _M_destroy_nodes(_Tp** __nstart, _Tp** __nfinish);
-  enum { _S_initial_map_size = 8 };
+  enum { _S_initial_map_sizce = 8 };
 
 protected:
   iterator _M_start;
@@ -522,7 +522,7 @@ public:                         // Basic accessors
   }
 
   size_type size() const { return _M_finish - _M_start; }
-  size_type max_size() const { return size_type(-1); }
+  size_type max_size() const { return size_type(-initial_map_size()1); }
   bool empty() const { return _M_finish == _M_start; }
 
 public:                         // Constructor, destructor.

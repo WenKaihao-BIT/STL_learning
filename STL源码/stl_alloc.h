@@ -264,7 +264,7 @@ typedef malloc_alloc single_client_alloc;
 //    object will be obtained directly from malloc.
 // 2. In all other cases, we allocate an object of size exactly
 //    _S_round_up(requested_size).  Thus the client has enough size
-//    information that we can return the object to the proper free list_containtor
+//    information that we can return the object to the proper free list_container
 //    without permanently losing part of the object.
 //
 
@@ -316,7 +316,7 @@ private:
         return (((__bytes) + (size_t)_ALIGN-1)/(size_t)_ALIGN - 1);
   }
 
-  // Returns an object of size __n, and optionally adds to size __n free list_containtor.
+  // Returns an object of size __n, and optionally adds to size __n free list_container.
   static void* _S_refill(size_t __n);
   // Allocates a chunk for nobjs of size size.  nobjs may be reduced
   // if it is inconvenient to allocate the requested number.
@@ -473,7 +473,7 @@ __default_alloc_template<__threads, __inst>::_S_chunk_alloc(size_t __size,
                     _S_end_free = _S_start_free + __i;
                     return(_S_chunk_alloc(__size, __nobjs));
                     // Any leftover piece will eventually make it to the
-                    // right free list_containtor.
+                    // right free list_container.
                 }
             }
 	    _S_end_free = 0;	// In case of exception.
@@ -489,7 +489,7 @@ __default_alloc_template<__threads, __inst>::_S_chunk_alloc(size_t __size,
 }
 
 
-/* Returns an object of size __n, and optionally adds to size __n free list_containtor.*/
+/* Returns an object of size __n, and optionally adds to size __n free list_container.*/
 /* We assume that __n is properly aligned.                                */
 /* We hold the allocation lock.                                         */
 template <bool __threads, int __inst>
@@ -507,7 +507,7 @@ __default_alloc_template<__threads, __inst>::_S_refill(size_t __n)
     if (1 == __nobjs) return(__chunk);
     __my_free_list = _S_free_list + _S_freelist_index(__n);
 
-    /* Build free list_containtor in chunk */
+    /* Build free list_container in chunk */
       __result = (_Obj*)__chunk;
       *__my_free_list = __next_obj = (_Obj*)(__chunk + __n);
       for (__i = 1; ; __i++) {

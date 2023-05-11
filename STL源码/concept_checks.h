@@ -73,7 +73,7 @@
 #else /* __STL_USE_CONCEPT_CHECKS */
 
 // This macro tests whether the template argument "__type_var"
-// satisfies the requirements of "__concept".  Here is a list_containtor of concepts
+// satisfies the requirements of "__concept".  Here is a list_container of concepts
 // that we know how to check:
 //       _Allocator
 //       _Assignable
