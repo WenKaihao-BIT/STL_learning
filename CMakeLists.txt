@@ -11,4 +11,7 @@ add_executable(list_container_test SequenceContainer/list_container/test.cpp Seq
 add_executable(deque_container_test SequenceContainer/deque_container/test.cpp)
 add_executable(stack_container_test SequenceContainer/stack_container/stack_test.cpp)
 add_executable(queue_container_test SequenceContainer/queue_container/queue_test.cpp)
-add_executable(heap_container_test SequenceContainer/heap_container/heap_test.cpp)
+add_executable(heap_container_test SequenceContainer/heap/heap_test.cpp)
+add_executable(priority_queue_test SequenceContainer/priority_queue/test.cpp)
+add_executable(slist_test SequenceContainer/slist_container/test.cpp)
+add_executable(RBtree AssociativeContainer/RBtree/test.cpp)

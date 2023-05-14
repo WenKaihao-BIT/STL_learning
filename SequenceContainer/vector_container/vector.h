@@ -37,6 +37,8 @@ namespace wen{
     public:
         iterator begin(){return start;}
         iterator end(){return finish;}
+        iterator begin()const{return start;}
+        iterator end()const{return finish;}
         size_type size()const{return size_type (end()-begin());}
         size_type capacity()const {
             return size_type (end_of_storage-begin());
@@ -48,13 +50,28 @@ namespace wen{
         vector(size_type n, const_reference value){ fill_initialize(n, value);}
         vector(long n, const_reference value){ fill_initialize(n, value);}
         vector(int n, const_reference value){ fill_initialize(n, value);}
+        template<class Iterator>
+        vector(Iterator first,Iterator last){
+            size_type len=last-first;
+            iterator tmp=data_allocator ::allocate(len);
+            start=tmp;
+            finish=tmp+len;
+            while (first!=last){
+                construct(tmp, *first);
+                tmp++;
+                first++;
+            }
+
+        }
         explicit vector(size_type n){ fill_initialize(n, T());}
         /** endregion */
         ~vector(){
             destroy(start,finish);
         }
         reference front(){return *begin();}
+        const_reference front()const{return *begin();}
         reference back(){return *(end()-1);}
+        const_reference back()const{return *(end()-1);}
         void push_back(const T& x){
             if(finish!=end_of_storage){
                 construct(finish,x);

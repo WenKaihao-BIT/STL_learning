@@ -116,6 +116,20 @@ namespace wen{
     }
     /** endregion */
     /** region ## uninitialized_copy ## */
+    //函数声明
+    template<class InputIterator,class ForwardIterator,class T>
+    inline ForwardIterator
+    __uninitialized_copy(InputIterator first,InputIterator last,ForwardIterator result,T);
+    template<class InputIterator,class ForwardIterator>
+    inline ForwardIterator
+    __uninitialized_copy_aux(InputIterator first,InputIterator last,
+                             ForwardIterator result,__true_type);
+    template<class InputIterator,class ForwardIterator>
+    inline ForwardIterator
+    __uninitialized_copy_aux(InputIterator first,InputIterator last,
+                             ForwardIterator result,__false_type);
+
+
     template<class InputIterator,class ForwardIterator>
     inline ForwardIterator
         uninitialized_copy(InputIterator first,InputIterator last,ForwardIterator result){
