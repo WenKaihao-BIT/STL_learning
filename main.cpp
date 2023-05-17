@@ -60,25 +60,9 @@ void test2(T){
 struct true_type:std::true_type {
 
 };
+
 int main() {
-//    vector<int>iv(2,9);
-//    test<int>iv(2,9);
-//    int a=5;
-//    int *ptr=&a;
-//    double *ptr2;
-//    auto_ptr<int>aptr(ptr);
-//    test2(aptr);
-//    test2(auto_ptr<double>());
-//    std::vector<int>nums;
-////    wen::uninitialized_fill_n(nums.begin(),5,-1);
-//    test<int>abc();
-//    fun1(true_type());
-    int *ptr;
-    ptr=simple_alloc<int,alloc>::allocate();
-    construct(ptr,5);
-    std::cout<<*ptr<<std::endl;
-    destroy(ptr);
-    simple_alloc<int,alloc>::deallocate(ptr);
+    int *p;
 
 
     return 0;

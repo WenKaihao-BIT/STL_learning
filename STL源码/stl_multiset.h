@@ -72,7 +72,7 @@ public:
 private:
   typedef _Rb_tree<key_type, value_type, 
                   _Identity<value_type>, key_compare, _Alloc> _Rep_type;
-  _Rep_type _M_t;  // red-black tree representing multiset
+  _Rep_type _M_t;  // red-black tree representing multimap
 public:
   typedef typename _Rep_type::const_pointer pointer;
   typedef typename _Rep_type::const_pointer const_pointer;
@@ -96,12 +96,12 @@ public:
 #ifdef __STL_MEMBER_TEMPLATES
 
   template <class _InputIterator>
-  multiset(_InputIterator __first, _InputIterator __last)
+  multimap(_InputIterator __first, _InputIterator __last)
     : _M_t(_Compare(), allocator_type())
     { _M_t.insert_equal(__first, __last); }
 
   template <class _InputIterator>
-  multiset(_InputIterator __first, _InputIterator __last,
+  multimap(_InputIterator __first, _InputIterator __last,
            const _Compare& __comp,
            const allocator_type& __a = allocator_type())
     : _M_t(__comp, __a) { _M_t.insert_equal(__first, __last); }
@@ -185,7 +185,7 @@ public:
   }
   void clear() { _M_t.clear(); }
 
-  // multiset operations:
+  // multimap operations:
 
   iterator find(const key_type& __x) const { return _M_t.find(__x); }
   size_type count(const key_type& __x) const { return _M_t.count(__x); }
@@ -201,11 +201,11 @@ public:
 
 #ifdef __STL_TEMPLATE_FRIENDS
   template <class _K1, class _C1, class _A1>
-  friend bool operator== (const multiset<_K1,_C1,_A1>&,
-                          const multiset<_K1,_C1,_A1>&);
+  friend bool operator== (const multimap<_K1,_C1,_A1>&,
+                          const multimap<_K1,_C1,_A1>&);
   template <class _K1, class _C1, class _A1>
-  friend bool operator< (const multiset<_K1,_C1,_A1>&,
-                         const multiset<_K1,_C1,_A1>&);
+  friend bool operator< (const multimap<_K1,_C1,_A1>&,
+                         const multimap<_K1,_C1,_A1>&);
 #else /* __STL_TEMPLATE_FRIENDS */
   friend bool __STD_QUALIFIER
   operator== __STL_NULL_TMPL_ARGS (const multiset&, const multiset&);
@@ -229,32 +229,32 @@ inline bool operator<(const multiset<_Key,_Compare,_Alloc>& __x,
 #ifdef __STL_FUNCTION_TMPL_PARTIAL_ORDER
 
 template <class _Key, class _Compare, class _Alloc>
-inline bool operator!=(const multiset<_Key,_Compare,_Alloc>& __x, 
-                       const multiset<_Key,_Compare,_Alloc>& __y) {
+inline bool operator!=(const multimap<_Key,_Compare,_Alloc>& __x,
+                       const multimap<_Key,_Compare,_Alloc>& __y) {
   return !(__x == __y);
 }
 
 template <class _Key, class _Compare, class _Alloc>
-inline bool operator>(const multiset<_Key,_Compare,_Alloc>& __x, 
-                      const multiset<_Key,_Compare,_Alloc>& __y) {
+inline bool operator>(const multimap<_Key,_Compare,_Alloc>& __x,
+                      const multimap<_Key,_Compare,_Alloc>& __y) {
   return __y < __x;
 }
 
 template <class _Key, class _Compare, class _Alloc>
-inline bool operator<=(const multiset<_Key,_Compare,_Alloc>& __x, 
-                       const multiset<_Key,_Compare,_Alloc>& __y) {
+inline bool operator<=(const multimap<_Key,_Compare,_Alloc>& __x,
+                       const multimap<_Key,_Compare,_Alloc>& __y) {
   return !(__y < __x);
 }
 
 template <class _Key, class _Compare, class _Alloc>
-inline bool operator>=(const multiset<_Key,_Compare,_Alloc>& __x, 
-                       const multiset<_Key,_Compare,_Alloc>& __y) {
+inline bool operator>=(const multimap<_Key,_Compare,_Alloc>& __x,
+                       const multimap<_Key,_Compare,_Alloc>& __y) {
   return !(__x < __y);
 }
 
 template <class _Key, class _Compare, class _Alloc>
-inline void swap(multiset<_Key,_Compare,_Alloc>& __x, 
-                 multiset<_Key,_Compare,_Alloc>& __y) {
+inline void swap(multimap<_Key,_Compare,_Alloc>& __x,
+                 multimap<_Key,_Compare,_Alloc>& __y) {
   __x.swap(__y);
 }
 

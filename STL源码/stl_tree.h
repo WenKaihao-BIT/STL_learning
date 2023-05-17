@@ -36,7 +36,7 @@
 /*
 
 Red-black tree class, designed for use in implementing STL
-associative containers (set, multiset, map, and multimap). The
+associative containers (set, multimap, map, and multimap). The
 insertion and deletion algorithms are based on those in Cormen,
 Leiserson, and Rivest, Introduction to Algorithms (MIT Press, 1990),
 except that
