@@ -2,13 +2,13 @@
 // Created by Q on 2023/5/11.
 //
 
-#include <cstddef>
-#include "iostream"
+
 
 #ifndef STL_LEARNING_MYHEAP_H
 #define STL_LEARNING_MYHEAP_H
-
-#endif //STL_LEARNING_MYHEAP_H
+#include <cstddef>
+#include "iostream"
+#include "../../iter/my_traits.h"
 /**
  *  binary heap 是一种完全二叉树
  *  实现  heap    算法
@@ -17,26 +17,6 @@
  **/
     /** region ## value_type 函数 ## */
 namespace wen{
-    template<class T>
-    typename T::value_type value_type(const T& iter){
-        return typename T::value_type();
-    }
-    template<class T>
-    T value_type(T*){
-        return T();
-    }
-    /** endregion */
-    /** region ## distance_type ## */
-    template<class T>
-    typename T::difference_type distance_type(const T& iter){
-        return typename T::difference_type();
-    }
-    template<class T>
-    ptrdiff_t distance_type(T*){
-    return ptrdiff_t();
-    }
-    /** endregion */
-
 
     /** region ## heap-without-compare ## */
     /** region ## push_heap ## */
@@ -295,3 +275,5 @@ namespace wen{
     /** endregion */
     /** endregion */
 }
+
+#endif //STL_LEARNING_MYHEAP_H

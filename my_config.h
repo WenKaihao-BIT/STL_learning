@@ -13,6 +13,7 @@
 #   define __STL_NOTHROW throw()
 #   define __STL_UNWIND(action) catch(...) { action; throw; }
 #   define __STL_NULL_TMPL_ARGS <>
+#   define __STL_TEMPLATE_NULL template<>
 # else
 #   define __STL_TRY
 #   define __STL_CATCH_ALL if (false)

@@ -186,6 +186,28 @@ namespace wen{
         return __find(first,last,value,category());
     }
 /** endregion */
+
+    /** region ## value_type ## */
+    template<class T>
+    typename T::value_type value_type(const T& iter){
+        return typename T::value_type();
+    }
+    template<class T>
+    T value_type(T*){
+        return T();
+    }
+/** endregion */
+
+    /** region ## distance_type ## */
+    template<class T>
+    typename T::difference_type distance_type(const T& iter){
+        return typename T::difference_type();
+    }
+    template<class T>
+    ptrdiff_t distance_type(T*){
+        return ptrdiff_t();
+    }
+    /** endregion */
 }
 
 

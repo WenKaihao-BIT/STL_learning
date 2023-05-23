@@ -6,7 +6,9 @@
 #define STL_LEARNING_MYVECTOR_H
 #include "iostream"
 #include "../../myalloc/mymemory.h"
-#endif //STL_LEARNING_MYVECTOR_H
+#include "../../my_config.h"
+#include "../../functional/myfuncitons.h"
+
 
 namespace wen{
     template<class T,class Alloc=alloc>
@@ -15,6 +17,7 @@ namespace wen{
         typedef T value_type;
         typedef value_type* pointer;
         typedef value_type* iterator; //Random Access Iterators
+        typedef const value_type* const_iterator;
         typedef value_type& reference;
         typedef const value_type& const_reference;
         typedef size_t size_type;
@@ -28,6 +31,9 @@ namespace wen{
         void deallocate(){
             if(start)
                 data_allocator ::deallocate(start,end_of_storage-start);
+        }//从start开始回收所有节点
+        void deallocate(iterator first,size_type n){
+            data_allocator ::deallocate(first,n);
         }
         void fill_initialize(size_type n,const T& value){
             start = allocate_and_fill(n,value);
@@ -37,14 +43,15 @@ namespace wen{
     public:
         iterator begin(){return start;}
         iterator end(){return finish;}
-        iterator begin()const{return start;}
-        iterator end()const{return finish;}
+        const_iterator begin()const{return start;}
+        const_iterator end()const{return finish;}
         size_type size()const{return size_type (end()-begin());}
         size_type capacity()const {
             return size_type (end_of_storage-begin());
         }
         bool empty()const{return begin()==end();}
         reference operator[](size_type n){return *(begin()+n);}
+        const_reference operator[](size_type n)const{return *(begin()+n);}
         /** region ## 构造函数 ## */
         vector(): start(0), finish(0), end_of_storage(0){}
         vector(size_type n, const_reference value){ fill_initialize(n, value);}
@@ -107,11 +114,43 @@ namespace wen{
         }
         void resize(size_type new_size){ resize(new_size,T());}
         void insert(iterator position,size_type n,const T&x);
+        void reserve(size_type n){
+            if(n>capacity()){
+                const size_type old_size=size();
+                iterator tmp= allocate_and_copy(n,start,finish);
+                destroy(start,finish);
+                deallocate(start,end_of_storage-start);
+                start=tmp;
+                finish=tmp+old_size;
+                end_of_storage=tmp+n;
+            }
+
+        }
+        void swap(vector<T,Alloc>&x){
+
+            wen::swap(x.start,start);
+
+            wen::swap(x.finish,finish);
+
+            wen::swap(x.end_of_storage,end_of_storage);
+
+        }
     protected:
+        //分配n个空间，并用x填充
         iterator allocate_and_fill(size_type n,const T& x){
             iterator result=data_allocator ::allocate(n);
             uninitialized_fill_n(result,n,x);
             return result;
+        }
+        //分配n个空间，并将[first,last)拷贝进去
+        iterator allocate_and_copy(size_type n,iterator first,iterator last){
+            iterator result=data_allocator ::allocate(n);
+            __STL_TRY{
+                    uninitialized_copy(first,last,result);
+                return result;
+            }
+            __STL_UNWIND(deallocate(result,n))
+
         }
 
 
@@ -177,3 +216,4 @@ namespace wen{
     }
 }
 
+#endif //STL_LEARNING_MYVECTOR_H

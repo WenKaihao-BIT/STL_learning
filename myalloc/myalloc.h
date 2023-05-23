@@ -11,10 +11,11 @@
 #include "iostream"
 #include "__throw_bad_alloc.h"
 //第一级配置器
-//第二级配置器
-typedef wen::__default_alloc_template<__NODE_ALLOCATOR_THREADS, 0> alloc;
+
 #endif //STL_LEARNING_MYALLOC_H
 namespace wen {
+///第二级配置器
+    typedef wen::__default_alloc_template<__NODE_ALLOCATOR_THREADS, 0> alloc;
 
     template<class T, class Alloc=alloc>
     class simple_alloc {
