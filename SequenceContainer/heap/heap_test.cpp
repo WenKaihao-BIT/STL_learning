@@ -13,12 +13,12 @@ int main(){
     auto comp=std::less<std::vector<int>::value_type>();
     wen::push_heap(nums.begin(),nums.end(),comp);
     for(auto item:nums) std::cout<<item<<" ";std::cout<<std::endl;
-//    wen::pop_heap(nums.begin(),nums.end(),comp);
-//    for(auto item:nums) std::cout<<item<<" ";std::cout<<std::endl;
+    wen::pop_heap(nums.begin(),nums.end(),comp);
+    for(auto item:nums) std::cout<<item<<" ";std::cout<<std::endl;
 //    wen::sort_heap(nums.begin(),nums.end(),comp);
 //    for(auto item:nums) std::cout<<item<<" ";std::cout<<std::endl;
     std::vector<int>nums2={1,2,3,4,5,6,7};
-    wen::make_heap(nums2.begin(),nums2.end(),comp);
+//    wen::make_heap(nums2.begin(),nums2.end(),comp);
     for(auto item:nums2) std::cout<<item<<" ";
 
     return 0;

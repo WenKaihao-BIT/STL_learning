@@ -72,14 +72,7 @@ namespace wen{
                 ++n;
         return n;
     }
-/** region ## iterator_category ## */
-    template<class I>
-    inline typename iterator_traits<I>::iterator_category
-    iterator_category(const I&){
-        typedef typename iterator_traits<I>::iterator_category category;
-        return category();
-    }
-/** endregion */
+
 /** endregion */
 
     /** region ## advance learning ## */
@@ -187,27 +180,27 @@ namespace wen{
     }
 /** endregion */
 
-    /** region ## value_type ## */
-    template<class T>
-    typename T::value_type value_type(const T& iter){
-        return typename T::value_type();
-    }
-    template<class T>
-    T value_type(T*){
-        return T();
-    }
-/** endregion */
+//    /** region ## value_type ## */
+//    template<class T>
+//    typename T::value_type value_type(const T& iter){
+//        return typename T::value_type();
+//    }
+//    template<class T>
+//    T value_type(T*){
+//        return T();
+//    }
+///** endregion */
 
-    /** region ## distance_type ## */
-    template<class T>
-    typename T::difference_type distance_type(const T& iter){
-        return typename T::difference_type();
-    }
-    template<class T>
-    ptrdiff_t distance_type(T*){
-        return ptrdiff_t();
-    }
-    /** endregion */
+//    /** region ## distance_type ## */
+//    template<class T>
+//    typename T::difference_type distance_type(const T& iter){
+//        return typename T::difference_type();
+//    }
+//    template<class T>
+//    ptrdiff_t distance_type(T*){
+//        return ptrdiff_t();
+//    }
+//    /** endregion */
 }
 
 

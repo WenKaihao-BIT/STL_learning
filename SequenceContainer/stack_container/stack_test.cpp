@@ -4,11 +4,11 @@
 
 #include "stack.h"
 #include "../../my_config.h"
-#include "../list_container/myList.h"
+#include "../list_container/list.h"
 #include "vector"
 using namespace std;
 int main(){
-    wen::stack<int,wen::myList<int>>istack;
+    wen::stack<int,wen::list<int>>istack;
     istack.push(1);
     istack.push(3);
     istack.push(5);

@@ -100,7 +100,7 @@ namespace wen{
 /** endregion */
     /** region ## list ## */
     template<class T,class Alloc=alloc>
-    class myList{
+    class list{
     protected:
         typedef __list_node<T> list_node;
         //空间配置器
@@ -151,13 +151,18 @@ namespace wen{
             put_node(p);
         }
     public:
-        myList(){empty_initialize();}
+        list(){empty_initialize();}
 
 
         void push_back(const T&x){ insert(end(),x);}
         void push_front(const T&x){ insert(begin(),x);}
         //在position插入一个节点
         iterator insert(iterator position,const T&x);
+        template<class InputIterator>
+        void insert(iterator position,InputIterator first,InputIterator last){
+            for(;first!=last;first++)
+                insert(position,*first);
+        }
         //移除position处的节点
         iterator erase(iterator position);
         void pop_front(){ erase(begin());}
@@ -168,22 +173,22 @@ namespace wen{
         //移除数值相同的连续元素
         void unique();
         //将第二个链表接到position之后
-        void splice(iterator position,myList<T>&x){
+        void splice(iterator position, list<T>&x){
             if(!x.empty())
                 transfer(position,x.begin(),x.end());
         }
-        void splice(iterator position,myList<T>&,iterator i){
+        void splice(iterator position, list<T>&, iterator i){
             iterator j=i;
             ++j;
             if(position==i||position==j) return;
             transfer(position,i,j);
         }
-        void splice(iterator position,myList<T>&,iterator first,iterator last){
+        void splice(iterator position, list<T>&, iterator first, iterator last){
             if(first!=last)
                 transfer(position,first,last);
         }
         //将两个通过递增排序的链表合并
-        void merge(myList<T>&x){
+        void merge(list<T>&x){
             iterator first1=begin();
             iterator last1=end();
             iterator first2=x.begin();
@@ -199,8 +204,8 @@ namespace wen{
             }
             if(first2!=last2)transfer(last1,first2,last2);
         }
-        void swap(myList<T>&x){
-            myList<T>tmp=*this;
+        void swap(list<T>&x){
+            list<T>tmp=*this;
             *this=x;
             x=tmp;
         }
@@ -219,8 +224,8 @@ namespace wen{
     };
 
     template<class T, class Alloc>
-    typename myList<T,Alloc>::iterator
-    myList<T, Alloc>::insert(myList::iterator position, const T &x){
+    typename list<T,Alloc>::iterator
+    list<T, Alloc>::insert(list::iterator position, const T &x){
         link_type tmp= create_node(x);
         tmp->next=position.node;
         tmp->prev=position.node->prev;
@@ -230,8 +235,8 @@ namespace wen{
     }
 
     template<class T, class Alloc>
-    typename myList<T,Alloc>::iterator
-    myList<T, Alloc>::erase(iterator position) {
+    typename list<T,Alloc>::iterator
+    list<T, Alloc>::erase(iterator position) {
         link_type next_node = link_type(position.node->next);
         link_type prev_node = link_type(position.node->prev);
         prev_node->next=next_node;
@@ -241,7 +246,7 @@ namespace wen{
     }
 
     template<class T, class Alloc>
-    void myList<T, Alloc>::clear() {
+    void list<T, Alloc>::clear() {
         link_type cur=(link_type) node->next;
         while (cur!=node){
             link_type tmp=cur;
@@ -254,7 +259,7 @@ namespace wen{
     }
 
     template<class T, class Alloc>
-    void myList<T, Alloc>::remove(const T &value) {
+    void list<T, Alloc>::remove(const T &value) {
         iterator first=begin();
         iterator last=end();
         while (first!=last){
@@ -266,7 +271,7 @@ namespace wen{
     }
 
     template<class T, class Alloc>
-    void myList<T, Alloc>::unique() {
+    void list<T, Alloc>::unique() {
         iterator first = begin();
         iterator last = end();
         if(first==last) return;
@@ -281,7 +286,7 @@ namespace wen{
     }
 
     template<class T, class Alloc>
-    void myList<T, Alloc>::transfer(iterator position,iterator first,iterator last) {
+    void list<T, Alloc>::transfer(iterator position, iterator first, iterator last) {
         if(position!=last){
             (*(link_type((*last.node).prev))).next=position.node;
             (*(link_type((*first.node).prev))).next=last.node;
@@ -295,7 +300,7 @@ namespace wen{
     }
 
     template<class T, class Alloc>
-    void myList<T, Alloc>::reverse() {
+    void list<T, Alloc>::reverse() {
         if(node->next==node||link_type(node->next)->next==node)
             return;
         iterator first = begin();
@@ -308,11 +313,11 @@ namespace wen{
     }
 
     template<class T, class Alloc>
-    void myList<T, Alloc>::sort() {
+    void list<T, Alloc>::sort() {
         if(node->next==node||link_type(node->next)->next==node)
             return;
-        myList<T>carry;
-        myList<T>counter[64];
+        list<T>carry;
+        list<T>counter[64];
         int fill = 0;
         while (!empty()){
             carry.splice(carry.begin(),*this,begin());

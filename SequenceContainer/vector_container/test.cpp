@@ -16,6 +16,9 @@ int main(){
     int*p=&c,*q=&d;
     wen::swap(p,q);
     cout<<*p<<' '<<*q<<endl;
+    wen::vector<int>iv2;
+    cout<<iv2.size()<<endl;
+//    iv2.push_back(1);
 
 
 

@@ -83,7 +83,8 @@ namespace wen{
             if(finish!=end_of_storage){
                 construct(finish,x);
                 ++finish;
-            } else
+            }
+            else
                 insert_aux(end(),x);
         }
         void pop_back(){

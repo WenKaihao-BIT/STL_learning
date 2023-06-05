@@ -8,7 +8,7 @@
 #define STL_LEARNING_MYHEAP_H
 #include <cstddef>
 #include "iostream"
-#include "../../iter/my_traits.h"
+#include "../../iter/Iterator.h"
 /**
  *  binary heap 是一种完全二叉树
  *  实现  heap    算法
@@ -26,7 +26,7 @@ namespace wen{
     inline void push_heap(RandomAccessIterator first,RandomAccessIterator last);
 
     template<class RandomAccessIterator,class Distance,class T>
-    inline void __push_heap_aux(RandomAccessIterator first,RandomAccessIterator last,Distance,T);
+    inline void __push_heap_aux(RandomAccessIterator first,RandomAccessIterator last,Distance*,T*);
 
     template<class RandomAccessIterator,class Distance,class T>
     void __push_heap(RandomAccessIterator first,Distance holeIndex,Distance topIndex,T value);
@@ -40,7 +40,7 @@ namespace wen{
 
 
     template<class RandomAccessIterator,class Distance,class T>
-    inline void __push_heap_aux(RandomAccessIterator first,RandomAccessIterator last,Distance,T){
+    inline void __push_heap_aux(RandomAccessIterator first,RandomAccessIterator last,Distance*,T*){
         __push_heap(first,Distance((last-first)-1),Distance(0),T(*(last-1)));
     }
     template<class RandomAccessIterator,class Distance,class T>
@@ -62,7 +62,7 @@ namespace wen{
     inline void pop_heap(RandomAccessIterator first,RandomAccessIterator last);
 
     template<class RandomAccessIterator,class T>
-    inline void __pop_heap_aux(RandomAccessIterator first,RandomAccessIterator last,T);
+    inline void __pop_heap_aux(RandomAccessIterator first,RandomAccessIterator last,T*);
 
     template<class RandomAccessIterator,class Distance,class T>
     void __pop_heap(RandomAccessIterator first,RandomAccessIterator last,RandomAccessIterator result,T value,Distance);
@@ -77,7 +77,7 @@ namespace wen{
         __pop_heap_aux(first,last, value_type(first));
     }
     template<class RandomAccessIterator,class T>
-    inline void __pop_heap_aux(RandomAccessIterator first,RandomAccessIterator last,T){
+    inline void __pop_heap_aux(RandomAccessIterator first,RandomAccessIterator last,T*){
         __pop_heap(first,last-1,last-1,T(*(last-1)), distance_type(first));
     }
     template<class RandomAccessIterator,class Distance,class T>
@@ -132,7 +132,7 @@ namespace wen{
         __make_heap(first,last, value_type(first), distance_type(first));
     }
     template<class RandomAccessIterator,class T,class Distance>
-    void __make_heap(RandomAccessIterator first,RandomAccessIterator last,T,Distance){
+    void __make_heap(RandomAccessIterator first,RandomAccessIterator last,T*,Distance*){
         if(last-first<2) return;
         Distance len=last-first;
         Distance parent =(len-2)/2;
@@ -155,7 +155,7 @@ namespace wen{
 
     template<class RandomAccessIterator,class Distance,class T,class Compare>
     inline void __push_heap_aux(RandomAccessIterator first,RandomAccessIterator last,
-                                Distance,T,Compare comp);
+                                Distance*,T*,Compare comp);
 
     template<class RandomAccessIterator,class Distance,class T,class Compare >
     void __push_heap(RandomAccessIterator first,Distance holeIndex,Distance topIndex,T value,Compare comp);
@@ -169,7 +169,7 @@ namespace wen{
 
 
     template<class RandomAccessIterator,class Distance,class T,class Compare>
-    inline void __push_heap_aux(RandomAccessIterator first,RandomAccessIterator last,Distance,T,Compare comp){
+    inline void __push_heap_aux(RandomAccessIterator first,RandomAccessIterator last,Distance*,T*,Compare comp){
         __push_heap(first,Distance((last-first)-1),Distance(0),T(*(last-1)),comp);
     }
     template<class RandomAccessIterator,class Distance,class T,class Compare>
@@ -191,10 +191,10 @@ namespace wen{
     inline void pop_heap(RandomAccessIterator first,RandomAccessIterator last,Compare comp);
 
     template<class RandomAccessIterator,class T,class Compare>
-    inline void __pop_heap_aux(RandomAccessIterator first,RandomAccessIterator last,T,Compare comp);
+    inline void __pop_heap_aux(RandomAccessIterator first,RandomAccessIterator last,T*,Compare comp);
 
     template<class RandomAccessIterator,class Distance,class T,class Compare>
-    void __pop_heap(RandomAccessIterator first,RandomAccessIterator last,RandomAccessIterator result,T value,Distance,Compare comp);
+    void __pop_heap(RandomAccessIterator first,RandomAccessIterator last,RandomAccessIterator result,T value,Distance*,Compare comp);
 
     template<class RandomAccessIterator,class Distance,class T,class Compare>
     void __adjust_heap(RandomAccessIterator first,Distance holeIndex,Distance len,T value,Compare comp);
@@ -206,11 +206,11 @@ namespace wen{
         __pop_heap_aux(first,last, value_type(first),comp);
     }
     template<class RandomAccessIterator,class T,class Compare>
-    inline void __pop_heap_aux(RandomAccessIterator first,RandomAccessIterator last,T,Compare comp){
+    inline void __pop_heap_aux(RandomAccessIterator first,RandomAccessIterator last,T*,Compare comp){
         __pop_heap(first,last-1,last-1,T(*(last-1)), distance_type(first),comp);
     }
     template<class RandomAccessIterator,class Distance,class T,class Compare>
-    void __pop_heap(RandomAccessIterator first,RandomAccessIterator last,RandomAccessIterator result,T value,Distance,Compare comp){
+    void __pop_heap(RandomAccessIterator first,RandomAccessIterator last,RandomAccessIterator result,T value,Distance*,Compare comp){
         *result=*first;
         __adjust_heap(first,Distance(0),Distance(last-first),value,comp);
     }
